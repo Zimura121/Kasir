@@ -1,0 +1,339 @@
+<!DOCTYPE html>  <html lang="id">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Menu Rumah Makan + Kasir</title>  
+  <style>  
+    body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; }  
+    header { background-color: #343a40; color: white; text-align: center; padding: 20px; }  
+    nav { background-color: #495057; padding: 10px; text-align: center; }  
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }  
+    nav a:hover { text-decoration: underline; }  
+    h2 { margin: 20px; color: #343a40; }  
+    .menu-section { padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }  
+    .menu-item { background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2); text-align: center; }  
+    .menu-item img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 5px; }  
+    .menu-item p { margin: 0; }  
+    .menu-item .price { font-weight: bold; color: #28a745; margin: 5px 0; }  
+    button { padding: 5px 10px; margin-top: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }  
+    button:hover { background-color: #218838; }  
+    .btn-hapus { background-color: #dc3545; }  
+    .btn-hapus:hover { background-color: #c82333; }  
+    .kasir { background: #fff3cd; padding: 20px; margin: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }  
+    .kasir h2 { margin-top: 0; color: #856404; }  
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }  
+    table, th, td { border: 1px solid #ddd; }  
+    th, td { padding: 8px; text-align: center; }  
+    .total { margin-top: 10px; font-size: 18px; font-weight: bold; color: #d63384; }  
+    .pembayaran { margin-top: 15px; padding: 15px; background: #e2f0d9; border-radius: 8px; }  
+    .pembayaran label { font-weight: bold; }  
+    .pembayaran input { padding: 5px; margin: 5px 0; width: 100%; border-radius: 5px; border: 1px solid #ccc; }  
+    .kembalian { margin-top: 10px; font-size: 18px; font-weight: bold; color: #007bff; }  
+  </style>  
+</head>  
+<body>
+<!-- ====== LOGIN ====== -->
+<!-- ====== LOGIN ====== -->
+<div id="loginPage" style="display:flex; justify-content:center; align-items:center; height:100vh; 
+     background:url('https://img.freepik.com/free-photo/restaurant-interior_1127-3392.jpg') no-repeat center center/cover; 
+     color:white; flex-direction:column; position:relative;">
+
+  <!-- overlay gelap biar teks tetap jelas -->
+  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);"></div>
+
+  <!-- isi konten login -->
+  <div style="position:relative; z-index:1; text-align:center;">
+    <h2>Login Kasir</h2>
+    <input type="password" id="passwordInput" placeholder="Masukkan Password" 
+           style="padding:10px; border-radius:5px; border:none; margin:10px 0; width:200px;">
+    <br>
+    <button onclick="cekPassword()" 
+            style="padding:10px 20px; border:none; border-radius:5px; background:#28a745; color:white; cursor:pointer;">
+      Login
+    </button>
+    <p id="loginError" style="color:#ff6961; display:none;">Password salah!</p>
+  </div>
+</div>
+
+<!-- ====== KONTEN UTAMA ====== -->
+<div id="mainContent" style="display:none;">
+  <!-- copy semua kode header, nav, menu, kasir kamu disini -->
+</div>
+
+<script>
+  const PASSWORD = "12345"; // ganti sesuai kebutuhan
+
+  function cekPassword(){
+    let input = document.getElementById("passwordInput").value;
+    if(input === PASSWORD){
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    } else {
+      document.getElementById("loginError").style.display = "block";
+    }
+  }
+</script>
+</body>
+    <header>  
+  <h1>Selamat Datang di Rumah Makan aing</h1>  
+  <p>Menikmati hidangan lezat di tempat yang nyaman</p>  
+</header>  <nav>  
+  <a href="#kasir">Kasir</a>  
+</nav>  <!-- MENU MAKANAN -->  <h2>🍽️ Menu Makanan</h2>  
+<div class="menu-wrapper" style="position:relative; border-radius:10px; overflow:hidden; margin:20px;">
+  <!-- background + overlay -->
+  <div style="position:absolute; inset:0; 
+              background:url('https://img.freepik.com/free-photo/top-view-wooden-table-background_1150-18014.jpg') no-repeat center center/cover;">
+  </div>
+  <div style="position:absolute; inset:0; background:rgba(255,255,255,0.7);"></div>
+
+  <!-- isi menu -->
+  <div class="menu-section" id="makanan" style="position:relative; z-index:1;"></div>
+</div>
+
+<!-- MENU MINUMAN -->
+<h2>🥤 Menu Minuman</h2>
+<div class="menu-wrapper" style="position:relative; border-radius:10px; overflow:hidden; margin:20px;">
+  <!-- background + overlay -->
+  <div style="position:absolute; inset:0; 
+              background:url('https://img.freepik.com/free-photo/cold-drinks-with-ice-cubes_144627-26654.jpg') no-repeat center center/cover;">
+  </div>
+  <div style="position:absolute; inset:0; background:rgba(255,255,255,0.7);"></div>
+
+  <!-- isi menu -->
+  <div class="menu-section" id="minuman" style="position:relative; z-index:1;"></div>
+</div>
+<!-- KASIR -->
+<div class="kasir" id="kasir"
+     style="background:url('https://img.freepik.com/free-photo/cashier-counter-modern-cafe_1232-4562.jpg') no-repeat center center/cover;
+            position:relative; color:#fff;">
+
+  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); border-radius:8px;"></div>
+
+  <div style="position:relative; z-index:1;">
+    <h2>Kasir</h2>
+    <table id="tabelPesanan">
+      <thead>
+        <tr>
+          <th>Menu</th>
+          <th>Harga</th>
+          <th>Jumlah</th>
+          <th>Subtotal</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="total">Subtotal: <span id="subtotalHarga">Rp 0</span></div>
+    <div class="total">Pajak (10%): <span id="pajakHarga">Rp 0</span></div>
+    <div class="total">Total Bayar: <span id="totalHarga">Rp 0</span></div>
+
+    <div class="pembayaran" style="background:rgba(255,255,255,0.9); color:#000;">
+      <label for="metodeBayar">Metode Pembayaran:</label>
+      <select id="metodeBayar" onchange="ubahMetode()">
+        <option value="tunai">Tunai</option>
+        <option value="qris">QRIS</option>
+      </select>
+
+      <div id="tunaiForm">
+        <label for="uangDibayar">Uang Dibayar (Rp):</label>
+        <input type="number" id="uangDibayar" oninput="hitungKembalian()">
+        <div class="kembalian">Kembalian: <span id="kembalian">Rp 0</span></div>
+        <button onclick="bayar()" style="background-color: #007bff; margin-top: 15px;">Bayar</button>
+      </div>
+
+      <div id="qrisForm" style="display:none; text-align:center; margin-top:15px;">
+        <p>Scan QRIS untuk pembayaran:</p>
+        <img src="https://png.pngtree.com/element_our/20200610/ourmid/pngtree-creative-cartoon-qr-code-image_2243895.jpg"
+             alt="QRIS" style="width:200px; height:auto; border:1px solid #ccc; padding:10px; border-radius:8px;">
+        <button onclick="bayar()" style="background-color: #007bff; margin-top: 15px;">Bayar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function ubahMetode() {
+  let metode = document.getElementById("metodeBayar").value;
+  if (metode === "tunai") {
+    document.getElementById("tunaiForm").style.display = "block";
+    document.getElementById("qrisForm").style.display = "none";
+  } else {
+    document.getElementById("tunaiForm").style.display = "none";
+    document.getElementById("qrisForm").style.display = "block";
+  }
+}
+</script>
+  <script>  
+  let pesanan = {};  
+  
+  function formatRupiah(angka) {  
+    return "Rp " + angka.toLocaleString("id-ID");  
+  }  
+  
+  function tambahPesanan(nama, harga) {  
+    if (pesanan[nama]) {  
+      pesanan[nama].jumlah++;  
+    } else {  
+      pesanan[nama] = { harga: harga, jumlah: 1 };  
+    }  
+    updateTabel();  
+  }  
+  
+  function hapusPesanan(nama) {  
+    delete pesanan[nama];  
+    updateTabel();  
+  }  
+  
+ function updateTabel() {
+  const tbody = document.querySelector("#tabelPesanan tbody");
+  tbody.innerHTML = "";
+  let subtotal = 0;
+  for (let nama in pesanan) {
+    let item = pesanan[nama];
+    let itemSubtotal = item.harga * item.jumlah;
+    subtotal += itemSubtotal;
+    let tr = `<tr>
+                <td>${nama}</td>
+                <td>${formatRupiah(item.harga)}</td>
+                <td>${item.jumlah}</td>
+                <td>${formatRupiah(itemSubtotal)}</td>
+                <td><button class="btn-hapus" onclick="hapusPesanan('${nama}')">Hapus</button></td>
+              </tr>`;
+    tbody.innerHTML += tr;
+  }
+
+  // Hitung pajak 10%
+  let pajak = subtotal * 0.1;
+  let total = subtotal + pajak;
+
+  document.getElementById("subtotalHarga").innerText = formatRupiah(subtotal);
+  document.getElementById("pajakHarga").innerText = formatRupiah(pajak);
+  document.getElementById("totalHarga").innerText = formatRupiah(total);
+
+  hitungKembalian();
+}
+function hitungKembalian() {
+  let totalText = document.getElementById("totalHarga").innerText.replace(/[^0-9]/g, "");
+  let total = parseInt(totalText) || 0;
+  let bayar = parseInt(document.getElementById("uangDibayar").value) || 0;
+  let kembali = bayar - total;
+  document.getElementById("kembalian").innerText = formatRupiah(kembali >= 0 ? kembali : 0);
+}
+
+// Tambahkan fungsi baru ini
+function bayar() {
+  // Cek apakah ada pesanan di keranjang
+  if (Object.keys(pesanan).length === 0) {
+    alert("Keranjang pesanan masih kosong!");
+    return; // Berhenti jika tidak ada pesanan
+  }
+
+  // Konfirmasi pembayaran
+  const totalBayarText = document.getElementById("totalHarga").innerText;
+  if (confirm(`Total yang harus dibayar adalah ${totalBayarText}. Apakah Anda yakin ingin menyelesaikan pembayaran?`)) {
+    // Reset keranjang pesanan
+    pesanan = {};
+
+    // Perbarui tabel dan harga di kasir
+    updateTabel();
+
+    // Reset input uang dibayar dan kembalian
+    document.getElementById("uangDibayar").value = "";
+    document.getElementById("kembalian").innerText = formatRupiah(0);
+
+    alert("Pembayaran berhasil! Kasir siap untuk pesanan selanjutnya.");
+  }
+}
+  
+  // ====== MENU MAKANAN ======  
+  const menuMakanan = [  
+    {nama:"Nasi Goreng Spesial", harga:20000, gambar:"https://asset.kompas.com/crops/VcgvggZKE2VHqIAUp1pyHFXXYCs=/202x66:1000x599/1200x800/data/photo/2023/05/07/6456a450d2edd.jpg"},  
+    {nama:"Mie Goreng Jawa", harga:18000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTudMvfeuWSCB1LMSws_MXafdxCPbPCz3MelA&s"},  
+    {nama:"Ayam Bakar", harga:25000, gambar:"https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/74/2024/07/04/Resep-Ayam-Bakar-Kecap-3385055509.jpg"},  
+    {nama:"Ayam Penyet", harga:22000, gambar:"https://storage.googleapis.com/bakingworld-web-production/uploads/media/content_banner/shutterstock_2271825987-1691146661777.jpg"},  
+    {nama:"Sate Ayam", harga:30000, gambar:"https://www.dapurkobe.co.id/wp-content/uploads/sate-ayam.jpg"},  
+    {nama:"Sate Kambing", harga:40000, gambar:"https://www.dapurkobe.co.id/wp-content/uploads/sate-kambing-bumbu-kecap.jpg"},  
+    {nama:"Soto Ayam", harga:20000, gambar:"https://healthybelly.s3.amazonaws.com/product/media_1738841131_0.webp"},  
+    {nama:"Soto Betawi", harga:25000, gambar:"https://resepkoki.id/wp-content/uploads/2019/11/Soto-Betawi-2.jpg"},  
+    {nama:"Bakso Urat", harga:18000, gambar:"https://asset.kompas.com/crops/cB-7HVfVN0Ci4yQKdoswSrFSJeU=/0x0:698x465/1200x800/data/photo/2021/01/08/5ff86f55cf2e4.jpg"},  
+    {nama:"Mie Ayam", harga:15000, gambar:"https://asset.kompas.com/crops/cB-7HVfVN0Ci4yQKdoswSrFSJeU=/0x0:698x465/1200x800/data/photo/2021/01/08/5ff86f55cf2e4.jpg"},  
+    {nama:"Rawon", harga:32000, gambar:"https://assets.unileversolutions.com/recipes-v2/125611.jpg"},  
+    {nama:"Rendang", harga:28000, gambar:"https://www.astronauts.id/blog/wp-content/uploads/2023/03/Resep-Rendang-Daging-Sapi-Untuk-Lebaran-Gurih-dan-Nikmat-1024x683.jpg"},  
+    {nama:"Gado-Gado", harga:15000, gambar:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Gado_gado.jpg/1200px-Gado_gado.jpg"},  
+    {nama:"Ketoprak", harga:15000, gambar:"https://i0.wp.com/resepkoki.id/wp-content/uploads/2016/11/Resep-Ketoprak.jpg?fit=500%2C715&ssl=1"},  
+    {nama:"Lontong Sayur", harga:18000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOD2yv1QWP0OZXOs9C3W7sxVU5dWnccDatig&s"},  
+    {nama:"Pecel Lele", harga:20000, gambar:"https://asset.kompas.com/crops/vhkkKrYsJtPGU9jIpuht1703nLs=/0x0:1000x667/1200x800/data/photo/2021/03/21/60569b33a2b3d.jpeg"},  
+    {nama:"Ikan Bakar", harga:28000, gambar:"https://assets.unileversolutions.com/v1/133111872.png"},  
+    {nama:"Udang Saus Padang", harga:35000, gambar:"https://cdn.yummy.co.id/content-images/images/20230805/82G0VkvyphMdlZbLTUNPo5B7LPR2kH9T-31363931313734373032d41d8cd98f00b204e9800998ecf8427e.jpg?x-oss-process=image/resize,w_388,h_388,m_fixed,x-oss-process=image/format,webp"},  
+    {nama:"Cumi Goreng Tepung", harga:30000, gambar:"https://cdn1-production-images-kly.akamaized.net/FHxdoNLogQ42PCLz9iKHoLQuXmo=/1200x675/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/4235124/original/073699100_1669105829-fried-squid-calamari-rings.jpg"},  
+    {nama:"Tahu Tek", harga:12000, gambar:"https://asset.kompas.com/crops/WoK_UDMIGlgQcW-tj64WqxfWGsg=/114x0:958x563/1200x800/data/photo/2021/02/22/603330779a2d2.jpg"},  
+    {nama:"Tempe Mendoan", harga:10000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU8xdF1MuS0d90o8Cp0VVmVe-iNCgbuSQvlA&s"},  
+    {nama:"Kerupuk Udang", harga:5000, gambar:"https://cdn0-production-images-kly.akamaized.net/FPaR4dxUkGXkn6afU2UvcIsiB7U=/0x53:999x616/1200x675/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/4348997/original/066149200_1678168732-shutterstock_2195593301.jpg"},  
+    {nama:"Sop Buntut", harga:40000, gambar:"https://assets.unileversolutions.com/recipes-v2/125214.jpg"},  
+    {nama:"Nasi Uduk", harga:15000, gambar:"https://www.dapurkobe.co.id/wp-content/uploads/nasi-uduk-kobe.jpg"},  
+    {nama:"Ayam Geprek", harga:20000, gambar:"https://www.masakapahariini.com/wp-content/uploads/2023/03/shutterstock_1949306203-500x300.jpg"}  
+  ];  
+  
+  // ====== MENU MINUMAN ======  
+  const menuMinuman = [  
+    {nama:"Es Teh Manis", harga:8000, gambar:"https://asset.kompas.com/crops/-EW4dZIFD3U055K4qtHqSgUg_hM=/92x67:892x600/1200x800/data/photo/2023/08/23/64e59deb79bfb.jpg"},  
+    {nama:"Teh Panas", harga:7000, gambar:"https://assets.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/radarmalang/2021/04/WhatsApp-Image-2021-04-20-at-15.37.09.jpeg"},  
+    {nama:"Jus Jeruk", harga:12000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMcW4v9IAAEkowcNzZvXKM8uXbVcVw4WXfbw&s"},  
+    {nama:"Jus Alpukat", harga:15000, gambar:"https://cdn0-production-images-kly.akamaized.net/JrLqmSAiXRazzyhkmoZabBRmdr4=/0x0:1000x563/469x260/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/4659340/original/053837600_1700672532-shutterstock_2297180289.jpg"},  
+    {nama:"Jus Mangga", harga:14000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHPDH_UzAjGWtYfSRphRFtf2E-Y5X2YoXu8g&s"},  
+    {nama:"Jus Melon", harga:12000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFaHpdxGH6GmSb1V4nk9GxoPBr9iL3UvRq6A&s"},  
+    {nama:"Es Campur", harga:18000, gambar:"https://cdn0-production-images-kly.akamaized.net/qSxIa6DhH4tSfPQdtDo-0vS-6R8=/0x2180:3999x4434/1200x675/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3981507/original/061819300_1648783740-shutterstock_1969134643.jpg"},  
+    {nama:"Es Teler", harga:20000, gambar:"https://www.frisianflag.com/storage/app/media/uploaded-files/es-teler-gula-merah.jpg"},  
+    {nama:"Es Buah", harga:15000, gambar:"https://www.astronauts.id/blog/wp-content/uploads/2023/03/Daftar-Resep-Es-Buah-yang-Mudah-dan-Enak.jpg"},  
+    {nama:"Air Mineral", harga:5000, gambar:"https://i0.wp.com/raisa.aeonstore.id/wp-content/uploads/2023/04/2541402.jpg?fit=800%2C800&ssl=1"},  
+    {nama:"Kopi Hitam", harga:10000, gambar:"https://mu4.co.id/wp-content/uploads/2024/04/kopi-hitam.webp"},  
+    {nama:"Kopi Susu", harga:12000, gambar:"https://cdn.rri.co.id/berita/Meulaboh/o/1732328906032-WhatsApp_Image_2024-11-23_at_09.26.01/eq44fuita25ucpi.jpeg"},  
+    {nama:"Cappuccino", harga:15000, gambar:"https://dikemas.com/uploads/2020/09/Resep-Kopi-Cappucino-Minuman-Terpopuler-di-Coffee-Shop-720x415.jpg"},  
+    {nama:"Latte", harga:16000, gambar:"https://richcreme.com/wp-content/uploads/2022/07/latte.jpg"},  
+    {nama:"Matcha Latte", harga:18000, gambar:"https://mitziemee.com/wp-content/uploads/2024/05/2024-5-92-1.jpg"},  
+    {nama:"Es Cokelat", harga:15000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvfcd1PgfdoR4KkOldE7Q7_Dw-3uBqqA1MdQ&s"},  
+    {nama:"Susu Jahe", harga:12000, gambar:"https://www.qoala.app/id/blog/wp-content/uploads/2021/10/manfaat-susu-jahe.jpg"},  
+    {nama:"Wedang Uwuh", harga:15000, gambar:"https://res.cloudinary.com/dk0z4ums3/image/upload/v1725439821/attached_image/7-manfaat-wedang-uwuh-bagi-kesehatan-dan-cara-membuatnya.jpg"},  
+    {nama:"STMJ", harga:18000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStmhXB2pjcZhwSFkNiCtcUqyoSn06uESLnow&s"},  
+    {nama:"Bajigur", harga:12000, gambar:"https://res.cloudinary.com/dk0z4ums3/image/upload/v1747588505/attached_image/bajigur-minuman-tradisional-yang-punya-banyak-manfaat.jpg"},  
+    {nama:"Bandrek", harga:12000, gambar:"https://asset.kompas.com/crops/8XZuVynCcCuiHwPX2ezUTCde7KI=/0x0:1000x667/1200x800/data/photo/2021/06/20/60cef105d4c03.jpg"},  
+    {nama:"Soda Gembira", harga:15000, gambar:"https://ayummy.id/wp-content/uploads/2023/04/Happy-Soda.jpg"},  
+    {nama:"Milkshake Cokelat", harga:18000, gambar:"https://asset.kompas.com/crops/hCzQp_lseY7WlTf--9jjpbLPCoM=/83x67:940x638/1200x800/data/photo/2022/10/17/634d11c2c0a21.jpg"},  
+    {nama:"Milkshake Stroberi", harga:18000, gambar:"https://www.thehungrybites.com/wp-content/uploads/2023/06/Strawberry-milkshake-frappuccino-featured.jpg"},  
+    {nama:"Milkshake Vanila", harga:18000, gambar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRakj3V3RpdhZAoE4190-uarEpdMbXYUXRvbg&s"}  
+  ];  
+  
+  // TAMPILKAN MAKANAN  
+  const makananSection = document.getElementById("makanan");  
+  menuMakanan.forEach(item=>{  
+    let div = document.createElement("div");  
+    div.className = "menu-item";  
+    div.innerHTML = `<img src="${item.gambar}" alt="${item.nama}">  
+                     <p><strong>${item.nama}</strong></p>  
+                     <p class="price">${formatRupiah(item.harga)}</p>  
+                     <button onclick="tambahPesanan('${item.nama}', ${item.harga})">Tambah</button>`;  
+    makananSection.appendChild(div);  
+  });  
+  
+  // TAMPILKAN MINUMAN  
+  const minumanSection = document.getElementById("minuman");  
+  menuMinuman.forEach(item=>{  
+    let div = document.createElement("div");  
+    div.className = "menu-item";  
+    div.innerHTML = `<img src="${item.gambar}" alt="${item.nama}">  
+                     <p><strong>${item.nama}</strong></p>  
+                     <p class="price">${formatRupiah(item.harga)}</p>  
+                     <button onclick="tambahPesanan('${item.nama}', ${item.harga})">Tambah</button>`;  
+    minumanSection.appendChild(div);  
+  });  
+</script>
+<!-- FOOTER -->
+<footer style="background-color:#343a40; color:white; text-align:center; padding:20px; margin-top:30px;">
+  <p><strong>📍 Alamat:</strong> Jl. Sudirman No. 193, Jakarta</p>
+  <p><strong>📞 Telepon:</strong> 0812-36-7890</p>
+  <p>&copy; 2025 Rumah Makan Aing</p>
+</footer>
+</body>  
+</html>  
